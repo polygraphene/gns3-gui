@@ -121,6 +121,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.uiDocksMenu.addAction(self.uiTopologySummaryDockWidget.toggleViewAction())
         self.uiDocksMenu.addAction(self.uiConsoleDockWidget.toggleViewAction())
         self.uiDocksMenu.addAction(self.uiNodesDockWidget.toggleViewAction())
+        self.uiDocksMenu.addAction(self.uiPropertiesDockWidget.toggleViewAction())
 
         # default directories for QFileDialog
         self._import_configs_from_dir = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.DocumentsLocation)
@@ -248,7 +249,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.uiLabInstructionsAction.triggered.connect(self._labInstructionsActionSlot)
         self.uiAboutQtAction.triggered.connect(self._aboutQtActionSlot)
         self.uiAboutAction.triggered.connect(self._aboutActionSlot)
-        self.uiExportDebugInformationAction.triggered.connect(self._exportDebugInformationSlot)
+        self.uiExportDebugInformationsAction.triggered.connect(self._exportDebugInformationSlot)
         self.uiIOUVMConverterAction.triggered.connect(self._IOUVMConverterActionSlot)
 
         # browsers tool bar connections

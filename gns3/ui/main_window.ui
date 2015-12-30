@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>984</width>
-    <height>715</height>
+    <width>879</width>
+    <height>563</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -34,7 +34,7 @@ background-none;
 </string>
   </property>
   <property name="dockOptions">
-   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::VerticalTabs</set>
   </property>
   <widget class="QWidget" name="uiCentralWidget">
    <layout class="QGridLayout">
@@ -70,7 +70,7 @@ background-none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>984</width>
+     <width>879</width>
      <height>22</height>
     </rect>
    </property>
@@ -471,6 +471,14 @@ background-none;
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="PropertiesView" name="uiPropertiesDockWidget">
+   <property name="windowTitle">
+    <string>Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
   </widget>
   <action name="uiAboutAction">
    <property name="text">
@@ -1230,6 +1238,12 @@ background-none;
    <class>GraphicsView</class>
    <extends>QGraphicsView</extends>
    <header>..graphics_view.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PropertiesView</class>
+   <extends>QDockWidget</extends>
+   <header>..properties_view.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodesView</class>
