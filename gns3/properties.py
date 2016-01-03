@@ -20,6 +20,7 @@ class Properties:
     def __init__(self):
         self._node_properties = {}
 
+        self.registrerNodeProperties("General", "name", "Name")
         self.registrerNodeProperties("General", "asn", "ASN")
         self.registrerNodeProperties("Addressing", "ipv4.subnet", "IPV4 subnet", type="ipv4")
 

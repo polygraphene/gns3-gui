@@ -80,6 +80,7 @@ class Node(QtCore.QObject):
         self._loading = False
         self._status = 0
         self._ports = []
+        self._settings = {}
 
     @classmethod
     def reset(cls):

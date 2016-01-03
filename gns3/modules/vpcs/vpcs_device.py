@@ -249,6 +249,7 @@ class VPCSDevice(VM):
         :param node_info: representation of the node (dictionary)
         """
 
+        super().load(node_info)
         # for backward compatibility
         vm_id = node_info.get("vpcs_id")
         if not vm_id:
