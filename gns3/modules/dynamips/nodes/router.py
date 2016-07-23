@@ -21,6 +21,7 @@ Base class for Dynamips router implementation on the client side.
 
 import os
 import re
+import subprocess
 
 from gns3.vm import VM
 from gns3.node import Node
@@ -665,6 +666,41 @@ class Router(VM):
             self.server_error_signal.emit(self.id(), result["message"])
         else:
             log.info("{}: configs have been saved".format(self.name()))
+
+    def showConfig(self, tmp_config_path):
+        """
+        Show the startup-config.
+        """
+
+        self.httpGet("/dynamips/vms/{vm_id}/configs".format(vm_id=self._vm_id),
+                     self._showConfigCallback,
+                     context={"tmp_config_path": tmp_config_path})
+
+    def _showConfigCallback(self, result, error=False, context={}, **kwargs):
+        """
+        Callback for showConfig.
+
+        :param result: server response
+        :param error: indicates an error (boolean)
+        """
+
+        if error:
+            log.error("error while exporting {} configs: {}".format(self.name(), result["message"]))
+            self.server_error_signal.emit(self.id(), result["message"])
+        else:
+            tmp_config_path = context["tmp_config_path"]
+            if tmp_config_path:
+                try:
+                    with open(tmp_config_path, "wb") as f:
+                        log.info("Saving temporaly {} startup-config to {} to show".format(self.name(), tmp_config_path))
+                        if "startup_config_content" in result and result["startup_config_content"]:
+                            f.write(result["startup_config_content"].encode("utf-8"))
+
+										# To avoid conflict of vims, make readonly.
+                    subprocess.Popen(["gvim", "-R", tmp_config_path])
+                except OSError as e:
+                    self.error_signal.emit(self.id(), "Could not export startup-config to {}: {}".format(tmp_config_path, e))
+
 
     def exportConfig(self, startup_config_export_path, private_config_export_path):
         """

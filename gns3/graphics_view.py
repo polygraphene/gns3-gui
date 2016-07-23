@@ -792,6 +792,12 @@ class GraphicsView(QtWidgets.QGraphicsView):
             save_config_action.triggered.connect(self.saveConfigActionSlot)
             menu.addAction(save_config_action)
 
+        if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "showConfig"), items)):
+            show_config_action = QtWidgets.QAction("Show config", menu)
+            show_config_action.setIcon(QtGui.QIcon(':/icons/inspect.svg'))
+            show_config_action.triggered.connect(self.showConfigActionSlot)
+            menu.addAction(show_config_action)
+
         if True in list(map(lambda item: isinstance(item, NodeItem) and hasattr(item.node(), "startPacketCapture"), items)):
             capture_action = QtWidgets.QAction("Capture", menu)
             capture_action.setIcon(QtGui.QIcon(':/icons/inspect.svg'))
@@ -1237,6 +1243,17 @@ class GraphicsView(QtWidgets.QGraphicsView):
         for item in self.scene().selectedItems():
             if isinstance(item, NodeItem) and hasattr(item.node(), "saveConfig") and item.node().initialized():
                 item.node().saveConfig()
+
+    def showConfigActionSlot(self):
+        """
+        Slot to receive events from the save config action in the
+        contextual menu.
+        """
+
+        for item in self.scene().selectedItems():
+            if isinstance(item, NodeItem) and hasattr(item.node(), "showConfig") and item.node().initialized():
+              tmp_config_path = os.path.join(self._main_window.project().filesDir(), normalize_filename(item.node().name())) + "_tmp_startup-config.cfg"
+              item.node().showConfig(tmp_config_path)
 
     def captureActionSlot(self):
         """
